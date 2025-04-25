@@ -2,11 +2,16 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timezone
 import json
 import os
-# from dotenv import load_dotenv
-# load_dotenv()   # ← will read ./ .env into os.environ
+from dotenv import load_dotenv
+load_dotenv()   # ← will read ./ .env into os.environ
 
 app = Flask(__name__)
-app.secret_key = 'random-key'
+app.secret_key = os.getenv('SECRET_KEY')  # fails fast if missing
+
+# load 10-question bank once at startup
+with open('questions.json') as f:
+    COFFEE_DATA = json.load(f)
+
 
 @app.before_request
 def make_session_structures():
@@ -31,22 +36,35 @@ def wheel():
     session['timestamps']['wheel'] = datetime.utcnow().isoformat()
     return render_template('wheel.html')
 
-@app.route('/quiz/<int:question_id>', methods=['GET', 'POST'])
+@app.route('/quiz/<int:question_id>', methods=['GET','POST'])
 def quiz(question_id):
+    # if they’ve answered all questions, go to results
+    if question_id < 1 or question_id > len(COFFEE_DATA['quiz']):
+        return redirect(url_for('result'))
+
+    q = COFFEE_DATA['quiz'][question_id-1]
+
     if request.method == 'POST':
-        # Save the user's answer
-        selected = request.form.get('choice')
-        session['answers'][str(question_id)] = selected
+        session['answers'][str(question_id)] = request.form['choice']
         return redirect(url_for('quiz', question_id=question_id+1))
-    # question = COFFEE_DATA['quiz'][question_id-1]
-    return render_template('quiz.html', question_id=question_id)
+
+    return render_template(
+        'quiz.html',
+        question_id=question_id,
+        question_text=q['question'],
+        choices=q['choices']
+    )
+
 
 @app.route('/result')
 def result():
-    # Compute score (placeholder logic)
-    # correct_answers = COFFEE_DATA['quiz_answers']
-    score = sum(1 for k,v in session['answers'].items() if v == 'PLACEHOLDER')
-    total = len(session['answers'])
+    score = 0
+    for qid, ans in session['answers'].items():
+        correct = COFFEE_DATA['quiz'][int(qid)-1]['answer']
+        if ans == correct:
+            score += 1
+
+    total = len(COFFEE_DATA['quiz'])
     return render_template('result.html', score=score, total=total)
 
 if __name__ == '__main__':

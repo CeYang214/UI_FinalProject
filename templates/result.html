@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="results-container">
+    <h1 class="text-center mb-4">Your Quiz Results</h1>
+    
+    <div class="score-display text-center mb-5">
+        <div class="score-circle mx-auto">
+            <div class="score-number">{{ score }}/{{ total }}</div>
+            <div class="score-percent">{{ (score / total * 100) | round }}%</div>
+        </div>
+    </div>
+    
+    <div class="results-message text-center mb-4">
+        {% if score == total %}
+            <h2>Perfect Score!</h2>
+            <p>You're a coffee origin expert! Your knowledge of coffee flavors is exceptional.</p>
+        {% elif score >= total * 0.8 %}
+            <h2>Great Job!</h2>
+            <p>You have an excellent understanding of coffee origins and their flavor profiles.</p>
+        {% elif score >= total * 0.6 %}
+            <h2>Well Done!</h2>
+            <p>You have a good grasp of coffee origins. A little more practice and you'll be an expert!</p>
+        {% elif score >= total * 0.4 %}
+            <h2>Not Bad!</h2>
+            <p>You're on your way to understanding coffee origins. Keep learning!</p>
+        {% else %}
+            <h2>Keep Learning!</h2>
+            <p>Coffee origins can be complex. Review the information and try again!</p>
+        {% endif %}
+    </div>
+    
+    <div class="action-buttons text-center">
+        <a href="{{ url_for('learn', lesson_id=1) }}" class="btn btn-secondary mr-2">Review Guide</a>
+        <a href="{{ url_for('quiz', question_id=1) }}" class="btn btn-primary">Try Again</a>
+    </div>
+</div>
+{% endblock %}

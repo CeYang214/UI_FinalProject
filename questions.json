@@ -1,0 +1,55 @@
+{
+    "quiz": [
+      {
+        "question": "Which origin is famous for its bright blueberry and floral notes?",
+        "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
+        "answer": "Ethiopian"
+      },
+      {
+        "question": "Which coffee origin typically delivers a rich, chocolatey sweetness?",
+        "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
+        "answer": "Colombian"
+      },
+      {
+        "question": "Which origin is known for its heavy, earthy body and low acidity?",
+        "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
+        "answer": "Sumatran"
+      },
+      {
+        "question": "Which coffee origin often features bright citrus and blackcurrant flavors?",
+        "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
+        "answer": "Kenyan"
+      },
+      {
+        "question": "Which origin is prized for its delicate jasmine aroma?",
+        "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
+        "answer": "Ethiopian"
+      },
+      {
+        "question": "Which coffee is celebrated for its smooth nutty and caramel undertones?",
+        "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
+        "answer": "Colombian"
+      },
+      {
+        "question": "Which origin tends to have a syrupy body with herbal and spicy notes?",
+        "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
+        "answer": "Sumatran"
+      },
+      {
+        "question": "Which origin is often described as having zesty lemon and tea-like qualities?",
+        "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
+        "answer": "Kenyan"
+      },
+      {
+        "question": "Which coffee origin can showcase tropical fruit flavors like mango and pineapple?",
+        "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
+        "answer": "Ethiopian"
+      },
+      {
+        "question": "Which origin is known for its balanced bright acidity and smooth body?",
+        "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
+        "answer": "Colombian"
+      }
+    ]
+  }
+  

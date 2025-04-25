@@ -1,15 +1,30 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
-<h2>Question {{ question_id }}</h2>
-<form method="post">
-  <!-- Placeholder: Show question flavor profile -->
-  <div class="form-group">
-    <label>Select origin:</label><br>
-    <input type="radio" name="choice" value="Ethiopian"> Ethiopian<br>
-    <input type="radio" name="choice" value="Colombian"> Colombian<br>
-    <input type="radio" name="choice" value="Sumatran"> Sumatran<br>
-    <input type="radio" name="choice" value="Kenyan"> Kenyan
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<div class="quiz-container">
+    <h1 class="text-center mb-4">Coffee Origin Quiz</h1>
+    
+    <div class="progress-tracker text-center mb-4">
+        Question {{ question_id }} of 10
+    </div>
+    
+    <div class="question mb-4">
+        {{ question_text }}
+    </div>
+    
+    <form method="POST">
+        <div class="choices mb-4">
+            {% for choice in choices %}
+            <div class="choice-item">
+                <label class="d-block p-3">
+                    <input type="radio" name="choice" value="{{ choice }}" required>
+                    {{ choice }}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary d-block mx-auto">Next Question</button>
+    </form>
+</div>
 {% endblock %}
