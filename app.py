@@ -2,9 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timezone
 import json
 import os
+from dotenv import load_dotenv
+load_dotenv()   # ← will read ./ .env into os.environ
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY')  # fails fast if missing
+app.secret_key = os.getenv('SECRET_KEY')  # fails fast if missing
 
 @app.before_request
 def make_session_structures():
@@ -23,6 +25,11 @@ def learn(lesson_id):
     session['timestamps'][f'learn_{lesson_id}'] = datetime.utcnow().isoformat()
     # lesson_data = COFFEE_DATA['lessons'][lesson_id-1]
     return render_template('learn.html', lesson_id=lesson_id)
+
+@app.route('/wheel')
+def wheel():
+    session['timestamps']['wheel'] = datetime.utcnow().isoformat()
+    return render_template('wheel.html')
 
 @app.route('/quiz/<int:question_id>', methods=['GET', 'POST'])
 def quiz(question_id):

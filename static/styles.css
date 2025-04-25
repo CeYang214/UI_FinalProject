@@ -1,0 +1,2 @@
+#wheel svg { cursor: pointer; }
+.wheel-segment:focus { outline: none; filter: brightness(0.9); }

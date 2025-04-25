@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-4 text-brown">Coffee Flavor Wheel</h1>
+<div class="d-flex justify-content-center">
+  <svg id="flavorWheel" width="400" height="400" viewBox="0 0 400 400">
+    {% set segments = [
+      ('Sweet', 'Most common in: Colombian, Ethiopian', '#FFE082', 'M 200,120 L 200,20 A 180,180 0 0,1 305.80,54.38 L 247.02,135.28 A 80,80 0 0,0 200,120 Z'),
+      ('Citrus', 'Most common in: Kenyan, Ethiopian', '#FFF9C4', 'M 247.02,135.28 L 305.80,54.38 A 180,180 0 0,1 371.19,144.38 L 276.08,175.28 A 80,80 0 0,0 247.02,135.28 Z'),
+      ('Floral', 'Most common in: Ethiopian', '#F8BBD0', 'M 276.08,175.28 L 371.19,144.38 A 180,180 0 0,1 371.19,255.62 L 276.08,224.72 A 80,80 0 0,0 276.08,175.28 Z'),
+      ('Wine-like', 'Most common in: Kenyan, Colombian', '#FFCCBC', 'M 276.08,224.72 L 371.19,255.62 A 180,180 0 0,1 305.80,345.62 L 247.02,264.72 A 80,80 0 0,0 276.08,224.72 Z'),
+      ('Nutty', 'Most common in: Colombian', '#D7CCC8', 'M 247.02,264.72 L 305.80,345.62 A 180,180 0 0,1 200,380 L 200,280 A 80,80 0 0,0 247.02,264.72 Z'),
+      ('Cocoa', 'Most common in: Colombian', '#BCAAA4', 'M 200,280 L 200,380 A 180,180 0 0,1 94.20,345.62 L 152.98,264.72 A 80,80 0 0,0 200,280 Z'),
+      ('Herbal', 'Most common in: Sumatran', '#C5E1A5', 'M 152.98,264.72 L 94.20,345.62 A 180,180 0 0,1 28.81,255.62 L 123.92,224.72 A 80,80 0 0,0 152.98,264.72 Z'),
+      ('Earthy', 'Most common in: Sumatran', '#A1887F', 'M 123.92,224.72 L 28.81,255.62 A 180,180 0 0,1 28.81,144.38 L 123.92,175.28 A 80,80 0 0,0 123.92,224.72 Z'),
+      ('Fruity', 'Most common in: Ethiopian, Kenyan', '#FFECB3', 'M 123.92,175.28 L 28.81,144.38 A 180,180 0 0,1 94.20,54.38 L 152.98,135.28 A 80,80 0 0,0 123.92,175.28 Z'),
+      ('Tropical', 'Most common in: Ethiopian, Colombian', '#FFE082', 'M 152.98,135.28 L 94.20,54.38 A 180,180 0 0,1 200,20 L 200,120 A 80,80 0 0,0 152.98,135.28 Z')
+    ] %}
+    {% for name, content, fill, d in segments %}
+      <path class="wheel-segment" tabindex="0"
+            d="{{ d }}"
+            fill="{{ fill }}"
+            stroke="#5D4037" stroke-width="1"
+            data-toggle="popover"
+            data-trigger="focus"
+            title="{{ name }}"
+            data-content="{{ content }}"></path>
+    {% endfor %}
+  </svg>
+</div>
+{% endblock %}
