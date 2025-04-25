@@ -6,7 +6,7 @@ import os
 # load_dotenv()   # ← will read ./ .env into os.environ
 
 app = Flask(__name__)
-app.secret_key = 'dev-fallback-not-for-prod'
+app.secret_key = 'random-key'
 
 @app.before_request
 def make_session_structures():
