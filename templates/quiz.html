@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Question {{ question_id }}</h2>
+<form method="post">
+  <!-- Placeholder: Show question flavor profile -->
+  <div class="form-group">
+    <label>Select origin:</label><br>
+    <input type="radio" name="choice" value="Ethiopian"> Ethiopian<br>
+    <input type="radio" name="choice" value="Colombian"> Colombian<br>
+    <input type="radio" name="choice" value="Sumatran"> Sumatran<br>
+    <input type="radio" name="choice" value="Kenyan"> Kenyan
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

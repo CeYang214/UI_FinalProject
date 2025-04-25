@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Lesson {{ lesson_id }}</h2>
+<!-- Placeholder: Display lesson information here -->
+<a href="{% if lesson_id < 4 %}{{ url_for('learn', lesson_id=lesson_id+1) }}{% else %}{{ url_for('quiz', question_id=1) }}{% endif %}" class="btn btn-primary">Next</a>
+{% endblock %}
