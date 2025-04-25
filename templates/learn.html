@@ -1,6 +1,116 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Lesson {{ lesson_id }}</h2>
-<!-- Placeholder: Display lesson information here -->
+
+{% if lesson_id == 1 %}
+    <!-- Content for Lesson 1 -->
+    <h3> Four Types of Coffee</h3>
+    <p>Coffee beans from different regions have unique flavors based on their growing conditions, altitude, and processing</p>
+    <p>Click to highlight any of the coffee cups below to start learning their flavor notes!</p>
+
+<div class="container mt-4">
+    <!-- Row with coffee names -->
+    <div class="row mb-3">
+        <div class="col-md-3 text-center">
+            <h4>Ethiopian</h4>
+        </div>
+        <div class="col-md-3 text-center">
+            <h4>Colombian</h4>
+        </div>
+        <div class="col-md-3 text-center">
+            <h4>Sumatran</h4>
+        </div>
+        <div class="col-md-3 text-center">
+            <h4>Kenyan</h4>
+        </div>
+    </div>
+    
+    <!-- Row with coffee images -->
+    <div class="row">
+        <div class="col-md-3 text-center">
+            <img src="{{ url_for('static', filename='images/coffe_cup_black.png') }}" alt="Ethiopian Coffee" class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
+        </div>
+        <div class="col-md-3 text-center">
+            <img src="{{ url_for('static', filename='images/coffe_cup_blue.png') }}" alt="Colombian Coffee" class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
+        </div>
+        <div class="col-md-3 text-center">
+            <img src="{{ url_for('static', filename='images/coffe_cup_yellow.png') }}" alt="Sumatran Coffee" class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
+        </div>
+        <div class="col-md-3 text-center">
+            <img src="{{ url_for('static', filename='images/coffe_cup_brown.png') }}" alt="Kenyan Coffee" class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
+        </div>
+    </div>
+</div>
+{% elif lesson_id == 2 %}
+    <!-- Ethiopian Coffee Guide -->
+    <div class="coffee-guide container">
+        <!-- Title -->
+        <div class="coffee-title text-center mb-4">
+            <h2>Lesson 2</h2>
+            <h2>Ethiopian Coffee</h2>
+        </div> 
+
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6">
+                <!-- Coffee Icon Placeholder -->
+                <div class="coffee-icon text-center mb-3">
+                    <img src="{{ url_for('static', filename='images/coffe_cup_black.png') }}" alt="Ethiopian Coffee" class="coffee-image">
+                </div>
+                
+                <!-- Information Box -->
+                <div class="coffee-info p-4 bg-light rounded">
+                    <p><strong>Origin:</strong> Yirgacheffe, Sidamo regions</p>
+                    <p><strong>Elevation:</strong> 1,700-2,200 metres</p>
+                    <p><strong>Process:</strong> Washed or Natural</p>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-6">
+                <!-- Flavor Profile -->
+                <div class="flavor-profile mb-4">
+                    <h3>Flavor Profile</h3>
+                    <div class="flavor-item d-flex align-items-center my-2">
+                        <span class="flavor-dot fruity"></span>
+                        <span class="flavor-text">Fruity: Blueberry, Strawberry</span>
+                    </div>
+                    <div class="flavor-item d-flex align-items-center my-2">
+                        <span class="flavor-dot floral"></span>
+                        <span class="flavor-text">Floral: Jasmine, Bergamot</span>
+                    </div>
+                    <div class="flavor-item d-flex align-items-center my-2">
+                        <span class="flavor-dot sweet"></span>
+                        <span class="flavor-text">Sweet: Honey, Citrus</span>
+                    </div>
+                    <div class="flavor-item d-flex align-items-center my-2">
+                        <span class="flavor-dot acidic"></span>
+                        <span class="flavor-text">High Acidity: Wine-like</span>
+                    </div>
+                </div>
+
+                <!-- Profile Intensity -->
+                <div class="profile-intensity">
+                    <h3>Profile Intensity:</h3>
+                    <div class="intensity-item my-3">
+                        <span class="intensity-label">Acidity:</span>
+                        <div class="intensity-bar">
+                            <div class="intensity-fill" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="intensity-item my-3">
+                        <span class="intensity-label">Body:</span>
+                        <div class="intensity-bar">
+                            <div class="intensity-fill" style="width: 40%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% elif lesson_id == 3 %}
+    <!-- Content for Lesson 3 -->
+{% endif %}
+
 <a href="{% if lesson_id < 4 %}{{ url_for('learn', lesson_id=lesson_id+1) }}{% else %}{{ url_for('quiz', question_id=1) }}{% endif %}" class="btn btn-primary">Next</a>
 {% endblock %}

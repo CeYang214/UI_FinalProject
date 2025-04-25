@@ -1,2 +1,124 @@
 #wheel svg { cursor: pointer; }
 .wheel-segment:focus { outline: none; filter: brightness(0.9); }
+
+/* Coffee Guide Styles */
+.coffee-guide {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.coffee-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.coffee-title h2 {
+    display: inline-block;
+    padding: 10px 40px;
+    border: 2px solid #333;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+/* Main container for two-column layout */
+.main-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Left Column */
+.left-column {
+    flex: 0 0 45%; /* Fixed width for left column */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Right Column */
+.right-column {
+    flex: 0 0 45%; /* Fixed width for right column */
+}
+
+/* Coffee Icon */
+.coffee-icon {
+    text-align: center;
+}
+
+.coffee-image {
+    width: 200px;
+    height: 200px;
+}
+
+/* Information Box */
+.coffee-info {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.coffee-info p {
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+/* Flavor Profile */
+.flavor-profile {
+    margin-bottom: 30px;
+}
+
+.flavor-profile h3 {
+    margin-bottom: 15px;
+}
+
+.flavor-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.flavor-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.flavor-dot.fruity { background-color: #E5A193; }
+.flavor-dot.floral { background-color: #E8A5C6; }
+.flavor-dot.sweet { background-color: #FFF4B8; }
+.flavor-dot.acidic { background-color: #F2D4A7; }
+
+/* Profile Intensity */
+.profile-intensity {
+    margin-top: 30px;
+}
+
+.intensity-item {
+    margin: 15px 0;
+}
+
+.intensity-label {
+    display: inline-block;
+    width: 80px;
+}
+
+.intensity-bar {
+    display: inline-block;
+    width: 200px;
+    height: 20px;
+    background-color: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-left: 10px;
+}
+
+.intensity-fill {
+    height: 100%;
+    background-color: #8B4513;
+    border-radius: 10px;
+}
+
+/* End Coffee Guide Styles */
