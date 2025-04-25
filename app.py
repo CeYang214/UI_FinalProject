@@ -2,11 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timezone
 import json
 import os
-from dotenv import load_dotenv
-load_dotenv()   # ← will read ./ .env into os.environ
+#from dotenv import load_dotenv
+#load_dotenv()   # ← will read ./ .env into os.environ
 
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY')  # fails fast if missing
+#app.secret_key = os.getenv('SECRET_KEY')  # fails fast if missing
+app.secret_key = 'random-key'
 
 # load 10-question bank once at startup
 with open('questions.json') as f:
