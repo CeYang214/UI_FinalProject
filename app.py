@@ -42,22 +42,28 @@ def quiz(question_id):
     # if they’ve answered all questions, go to results
     if question_id < 1 or question_id > len(COFFEE_DATA['quiz']):
         return redirect(url_for('result'))
-
+    
     q = COFFEE_DATA['quiz'][question_id-1]
+    total_questions = len(COFFEE_DATA['quiz'])
+    #if request.method == 'POST':
+        #session['answers'][str(question_id)] = request.form['choice']
+        #return redirect(url_for('quiz', question_id=question_id+1))
 
     if request.method == 'POST':
         # Save the user's choice
         answers = session.get('answers', {})
         answers[str(question_id)] = request.form['choice']
-        session['answers'] = answers      # <-- FIXED: reassign answers to session so Flask detects change
-        # Alternative: session.modified = True  # <-- could be used to flag in-place mutation
-        return redirect(url_for('quiz', question_id=question_id+1))
+        session['answers'] = answers      
+        return redirect(url_for('quiz', question_id=question_id+1))    
+        
 
     return render_template(
         'quiz.html',
         question_id=question_id,
+        total_questions=total_questions,
         question_text=q['question'],
-        choices=q['choices']
+        choices=q['choices'],
+        image_url=q.get('image_url')   # ← this makes {{ image_url }} available
     )
 
 
