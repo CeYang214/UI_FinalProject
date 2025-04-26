@@ -46,7 +46,11 @@ def quiz(question_id):
     q = COFFEE_DATA['quiz'][question_id-1]
 
     if request.method == 'POST':
-        session['answers'][str(question_id)] = request.form['choice']
+        # Save the user's choice
+        answers = session.get('answers', {})
+        answers[str(question_id)] = request.form['choice']
+        session['answers'] = answers      # <-- FIXED: reassign answers to session so Flask detects change
+        # Alternative: session.modified = True  # <-- could be used to flag in-place mutation
         return redirect(url_for('quiz', question_id=question_id+1))
 
     return render_template(
