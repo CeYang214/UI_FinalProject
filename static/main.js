@@ -1,6 +1,3 @@
-// $(function() {
-//     $('[data-toggle="popover"]').popover({
-//       placement: 'auto',
-//       html: true
-//     });
-//   });
+document.addEventListener('DOMContentLoaded', () => {
+    console.log(`Page loaded: ${location.pathname} at ${new Date().toISOString()}`);
+  });
