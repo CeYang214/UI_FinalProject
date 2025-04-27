@@ -4,27 +4,39 @@
 <div class="quiz-container">
     <h1 class="text-center mb-4">Coffee Origin Quiz</h1>
     
-    <div class="progress-tracker text-center mb-4">
-        Question {{ question_id }} of 10
+    <div class="progress-tracker text-center mb-2">
+        Question {{ question_id }} of {{ total_questions }}
     </div>
     
-    <div class="question mb-4">
-        {{ question_text }}
+    <!-- Fixed-height container for question text -->
+    <div class="question-container text-center mb-4 d-flex align-items-center justify-content-center" style="min-height:120px;">
+        <h2 class="mb-0">{{ question_text }}</h2>
+    </div>
+    
+    <!-- Fixed-size image box to preserve layout consistency -->
+    <div class="image-wrapper text-center mb-4" style="height:200px; overflow:hidden;">
+        {% if image_url %}
+        <img src="{{ image_url }}" alt="Image for question {{ question_id }}" class="img-fluid h-100">
+        {% else %}
+        <!-- placeholder to maintain space -->
+        {% endif %}
     </div>
     
     <form method="POST">
-        <div class="choices mb-4">
+        <div class="row">
             {% for choice in choices %}
-            <div class="choice-item">
-                <label class="d-block p-3">
-                    <input type="radio" name="choice" value="{{ choice }}" required>
+            <div class="col-6 col-md-3 mb-3">
+                <button 
+                    type="submit" 
+                    name="choice" 
+                    value="{{ choice }}" 
+                    class="btn btn-outline-primary btn-block py-3 text-truncate">
                     {{ choice }}
-                </label>
+                </button>
             </div>
             {% endfor %}
         </div>
-        
-        <button type="submit" class="btn btn-primary d-block mx-auto">Next Question</button>
     </form>
+    
 </div>
 {% endblock %}

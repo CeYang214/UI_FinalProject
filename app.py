@@ -2,11 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timezone
 import json
 import os
-#from dotenv import load_dotenv
-#load_dotenv()   # ← will read ./ .env into os.environ
+import math
+# from dotenv import load_dotenv
+# load_dotenv()   # ← will read ./ .env into os.environ
 
 app = Flask(__name__)
-#app.secret_key = os.getenv('SECRET_KEY')  # fails fast if missing
+app.jinja_env.globals.update(radians=math.radians, cos=math.cos, sin=math.sin)
 app.secret_key = 'random-key'
 
 # load 10-question bank once at startup
@@ -39,23 +40,75 @@ def wheel():
 
 @app.route('/quiz/<int:question_id>', methods=['GET','POST'])
 def quiz(question_id):
-    # if they’ve answered all questions, go to results
+    # if they've answered all questions, go to results
     if question_id < 1 or question_id > len(COFFEE_DATA['quiz']):
         return redirect(url_for('result'))
-
+    
     q = COFFEE_DATA['quiz'][question_id-1]
+    total_questions = len(COFFEE_DATA['quiz'])
 
     if request.method == 'POST':
-        session['answers'][str(question_id)] = request.form['choice']
-        return redirect(url_for('quiz', question_id=question_id+1))
+        # Save the user's choice
+        choice = request.form['choice']
+        answers = session.get('answers', {})
+        answers[str(question_id)] = choice
+        session['answers'] = answers
+        
+        # Check if answer is correct and redirect to feedback page
+        correct_answer = q['answer']
+        is_correct = choice == correct_answer
+        
+        # Redirect to feedback page
+        return redirect(url_for('feedback', 
+                               question_id=question_id,
+                               is_correct=str(is_correct).lower(),
+                               selected=choice,
+                               next_question=question_id+1 if question_id < total_questions else 0))
 
     return render_template(
         'quiz.html',
         question_id=question_id,
+        total_questions=total_questions,
         question_text=q['question'],
-        choices=q['choices']
+        choices=q['choices'],
+        image_url=q.get('image_url')   # ← this makes {{ image_url }} available
     )
 
+    
+@app.route('/feedback')
+def feedback():
+    """Show feedback for an answer"""
+    question_id = int(request.args.get('question_id', 1))
+    is_correct = request.args.get('is_correct', 'false').lower() == 'true'
+    selected = request.args.get('selected', '')
+    next_question = int(request.args.get('next_question', 0))
+    
+    #question data
+    q = COFFEE_DATA['quiz'][question_id-1]
+    correct_answer = q['answer']
+    
+    if next_question > 0 and next_question <= len(COFFEE_DATA['quiz']):
+        next_url = url_for('quiz', question_id=next_question)
+    else:
+        next_url = url_for('result')
+    
+    # Coffee flavor descriptions for feedback
+    flavor_descriptions = {
+        'Ethiopian': 'Fruity berry notes, floral jasmine aromas, and a bright, complex acidity.',
+        'Kenyan': 'Bright citrus notes, blackcurrant flavors, and bold with bright, tangy acidity.',
+        'Colombian': 'Rich chocolate sweetness, nutty flavors, and a balanced smooth body.',
+        'Sumatran': 'Earthy, herbal qualities with spice notes, and heavy body with low acidity.'
+    }
+    
+    return render_template(
+        'feedback.html',
+        is_correct=is_correct,
+        selected=selected,
+        correct_answer=correct_answer,
+        flavor_description=flavor_descriptions.get(correct_answer, ''),
+        next_url=next_url,
+        question_data=q
+    )
 
 @app.route('/result')
 def result():

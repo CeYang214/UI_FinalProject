@@ -2,54 +2,63 @@
     "quiz": [
       {
         "question": "Which origin is famous for its bright blueberry and floral notes?",
+        "image_url": "https://www.thespruceeats.com/thmb/DFwO2OZTr1v7tk6f3EjDX_G50XM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Coffee-beans-in-sack-582cd4c93df78c6f6a9f903a.jpg",
         "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
         "answer": "Ethiopian"
       },
       {
         "question": "Which coffee origin typically delivers a rich, chocolatey sweetness?",
+        "image_url": "https://www.ictcoffee.com/wp-content/uploads/2023/06/colombian-coffee-scaled.jpeg",
         "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
         "answer": "Colombian"
       },
       {
         "question": "Which origin is known for its heavy, earthy body and low acidity?",
+        "image_url": "https://www.seriouseats.com/thmb/h4to0iqZyiU9nUMF3kUftFDLOd0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__drinks.seriouseats.com__images__2014__04__sumatra-coffee-0836f26643b346d1a4aeaa540732ac9b.jpg",
         "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
         "answer": "Sumatran"
       },
       {
         "question": "Which coffee origin often features bright citrus and blackcurrant flavors?",
+        "image_url": "https://www.ictcoffee.com/wp-content/uploads/2023/06/Kenyan-Coffee.jpg",
         "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
         "answer": "Kenyan"
       },
       {
         "question": "Which origin is prized for its delicate jasmine aroma?",
+        "image_url": "https://assets.beanbox.com/blog_images/HhnNa4LSqyOi0s5Q8Yjn.jpeg",
         "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
         "answer": "Ethiopian"
       },
       {
         "question": "Which coffee is celebrated for its smooth nutty and caramel undertones?",
+        "image_url": "https://i.ebayimg.com/images/g/eoAAAOSwi0Bj-z64/s-l1200.jpg",
         "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
         "answer": "Colombian"
       },
       {
         "question": "Which origin tends to have a syrupy body with herbal and spicy notes?",
+        "image_url": "https://i.ebayimg.com/images/g/YpMAAOxyWalR0SEj/s-l1200.jpg",
         "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
         "answer": "Sumatran"
       },
       {
         "question": "Which origin is often described as having zesty lemon and tea-like qualities?",
+        "image_url": "https://www.trabocca.com/wp-content/uploads/2020/06/Kenyan-Coffee-Varieties.jpg.webp",
         "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
         "answer": "Kenyan"
       },
       {
         "question": "Which coffee origin can showcase tropical fruit flavors like mango and pineapple?",
+        "image_url": "https://paxandbeneficia.com/cdn/shop/articles/cultural-significance-ethiopian-coffee.jpg?v=1663277836",
         "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
         "answer": "Ethiopian"
       },
       {
         "question": "Which origin is known for its balanced bright acidity and smooth body?",
+        "image_url": "https://cdn.shopify.com/s/files/1/0517/6203/6926/files/Colombian_coffee.jpg",
         "choices": ["Ethiopian", "Colombian", "Sumatran", "Kenyan"],
         "answer": "Colombian"
       }
     ]
   }
-  

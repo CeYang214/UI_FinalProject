@@ -1,30 +1,536 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 class="mb-4 text-brown">Coffee Flavor Wheel</h1>
-<div class="d-flex justify-content-center">
-  <svg id="flavorWheel" width="400" height="400" viewBox="0 0 400 400">
-    {% set segments = [
-      ('Sweet', 'Most common in: Colombian, Ethiopian', '#FFE082', 'M 200,120 L 200,20 A 180,180 0 0,1 305.80,54.38 L 247.02,135.28 A 80,80 0 0,0 200,120 Z'),
-      ('Citrus', 'Most common in: Kenyan, Ethiopian', '#FFF9C4', 'M 247.02,135.28 L 305.80,54.38 A 180,180 0 0,1 371.19,144.38 L 276.08,175.28 A 80,80 0 0,0 247.02,135.28 Z'),
-      ('Floral', 'Most common in: Ethiopian', '#F8BBD0', 'M 276.08,175.28 L 371.19,144.38 A 180,180 0 0,1 371.19,255.62 L 276.08,224.72 A 80,80 0 0,0 276.08,175.28 Z'),
-      ('Wine-like', 'Most common in: Kenyan, Colombian', '#FFCCBC', 'M 276.08,224.72 L 371.19,255.62 A 180,180 0 0,1 305.80,345.62 L 247.02,264.72 A 80,80 0 0,0 276.08,224.72 Z'),
-      ('Nutty', 'Most common in: Colombian', '#D7CCC8', 'M 247.02,264.72 L 305.80,345.62 A 180,180 0 0,1 200,380 L 200,280 A 80,80 0 0,0 247.02,264.72 Z'),
-      ('Cocoa', 'Most common in: Colombian', '#BCAAA4', 'M 200,280 L 200,380 A 180,180 0 0,1 94.20,345.62 L 152.98,264.72 A 80,80 0 0,0 200,280 Z'),
-      ('Herbal', 'Most common in: Sumatran', '#C5E1A5', 'M 152.98,264.72 L 94.20,345.62 A 180,180 0 0,1 28.81,255.62 L 123.92,224.72 A 80,80 0 0,0 152.98,264.72 Z'),
-      ('Earthy', 'Most common in: Sumatran', '#A1887F', 'M 123.92,224.72 L 28.81,255.62 A 180,180 0 0,1 28.81,144.38 L 123.92,175.28 A 80,80 0 0,0 123.92,224.72 Z'),
-      ('Fruity', 'Most common in: Ethiopian, Kenyan', '#FFECB3', 'M 123.92,175.28 L 28.81,144.38 A 180,180 0 0,1 94.20,54.38 L 152.98,135.28 A 80,80 0 0,0 123.92,175.28 Z'),
-      ('Tropical', 'Most common in: Ethiopian, Colombian', '#FFE082', 'M 152.98,135.28 L 94.20,54.38 A 180,180 0 0,1 200,20 L 200,120 A 80,80 0 0,0 152.98,135.28 Z')
-    ] %}
-    {% for name, content, fill, d in segments %}
-      <path class="wheel-segment" tabindex="0"
-            d="{{ d }}"
-            fill="{{ fill }}"
-            stroke="#5D4037" stroke-width="1"
-            data-toggle="popover"
-            data-trigger="focus"
-            title="{{ name }}"
-            data-content="{{ content }}"></path>
-    {% endfor %}
-  </svg>
+<div class="container">
+  <h2 class="text-center mb-4">Coffee Flavor Wheel</h2>  
+  <p class="inner-label text-center mb-4">Hover over any section to learn more about that flavor profile.</p>
+  <svg class="flavor-wheel" viewBox="0 0 1100 1100" preserveAspectRatio="xMidYMid meet"></svg>
 </div>
+
+<style>
+  .flavor-wheel {
+    max-width: 100%;
+    height: auto;
+  }
+  .inner-label {
+    font-size: 16px;
+    /* font-weight: bold; */
+    fill: #3e2723;
+  }
+  .radial-text {
+    font-size: 14px;
+    /* font-weight: bold; */
+    fill: #3e2723;
+  }
+  
+  /* Tooltip styles */
+  .tooltip {
+    visibility: hidden;
+    position: absolute;
+    border: 1px solid #5D4037;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    min-width: 300px;
+    max-width: 500px;
+    width: auto;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none; /* So it doesn't interfere with other hover events */
+  }
+
+  .tooltip-header {
+    margin-top: 0;
+    color: #5D4037;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+  /* .flavor-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #5D4037;
+  } */
+  .flavor-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #5D4037;
+    /* font-weight: bold; */
+  }
+  .origin-section {
+    margin-bottom: 25px;
+  }
+  .section-title {
+    font-size: 17px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  .origin-tag {
+    display: inline-block;
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 8px 20px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+  .notes-section {
+    margin-bottom: 20px;
+  }
+  .note-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .note-color {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  .note-text {
+    font-size: 15px;
+    color: #333;
+  }
+  
+  /* Color classes for the flavor note circles */
+  .berry-color { background-color: #d32f2f; }
+  .stone-color { background-color: #e67e22; }
+  .tropical-color { background-color: #f39c12; }
+  .floral-color { background-color: #F8BBD0; }
+  .citrus-color { background-color: #FFE0B2; }
+  .acid-color { background-color: #FFF59D; }
+  .sweet-color { background-color: #FFECB3; }
+  .vanilla-color { background-color: #F5F5DC; }
+  .nut-color { background-color: #D7CCC8; }
+  .roasted-color { background-color: #8D6E63; }
+  .chocolate-color { background-color: #6D4C41; }
+  .herb-color { background-color: #C8E6C9; }
+  .tea-color { background-color: #81C784; }
+  .earth-color { background-color: #A1887F; }
+  .wood-color { background-color: #795548; }
+  .wine-color { background-color: #E1BEE7; }
+  .dried-color { background-color: #CE93D8; }
+  .coconut-color { background-color: #FFFDE7; }
+  
+  /* Wheel segment hover effect */
+  .wheel-segment {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .wheel-segment:hover {
+    opacity: 0.8;
+  }
+
+  .inner-region {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .inner-region:hover {
+    opacity: 0.8;
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const svg = document.querySelector('.flavor-wheel');
+  
+  // 1) Geometry
+  const centerX = 550, centerY = 330;
+  const innerRadius = 125, outerRadius = 300;  // increased inner circle
+  
+  // 2) Draw hollow center
+  const circle = document.createElementNS(svg.namespaceURI,'circle');
+  circle.setAttribute('cx', centerX);
+  circle.setAttribute('cy', centerY);
+  circle.setAttribute('r',  innerRadius);
+  circle.setAttribute('fill','white');
+  circle.setAttribute('stroke','#5D4037');
+  circle.setAttribute('stroke-width','2');
+  svg.appendChild(circle);
+  
+  // 3) Divider lines
+  [[centerX-innerRadius,centerY, centerX+innerRadius,centerY],
+   [centerX,centerY-innerRadius, centerX,centerY+innerRadius]]
+  .forEach(coords=>{
+    const ln = document.createElementNS(svg.namespaceURI,'line');
+    ln.setAttribute('x1',coords[0]);
+    ln.setAttribute('y1',coords[1]);
+    ln.setAttribute('x2',coords[2]);
+    ln.setAttribute('y2',coords[3]);
+    ln.setAttribute('stroke','#5D4037');
+    ln.setAttribute('stroke-width','2');
+    svg.appendChild(ln);
+  });
+  
+  // 4) Inner labels
+  [
+    ['Ethiopian',  45],
+    ['Kenyan',    135],
+    ['Sumatran',  225],
+    ['Colombian', 315]
+  ].forEach(([name,deg])=>{
+    const rad = (deg-90)*Math.PI/180;
+    const x   = centerX + innerRadius*0.6 * Math.cos(rad);
+    const y   = centerY + innerRadius*0.6 * Math.sin(rad);
+    const txt= document.createElementNS(svg.namespaceURI,'text');
+    txt.setAttribute('x',x);
+    txt.setAttribute('y',y);
+    txt.setAttribute('class','inner-label');
+    txt.setAttribute('text-anchor','middle');
+    txt.setAttribute('alignment-baseline','middle');
+    txt.textContent = name;
+    svg.appendChild(txt);
+  });
+  
+  // 5) Exact flavor‐to‐quadrant mapping:
+  const flavors = [
+    // Sweet  (297→333) straddles 315° border
+    { name:'Nutty',     angleStart:306, angleEnd:342, color:'#FFECB3', description:'Found in: Colombian, Ethiopian' },
+    // Floral (333→9) wrapped
+    { name:'Sweet',    angleStart:342, angleEnd:  15, color:'#F8BBD0', description:'Found in: Ethiopian' },
+    // Fruity (9→45)
+    { name:'Floral',    angleStart:  15, angleEnd: 45, color:'#FFCCBC', description:'Found in: Ethiopian' },
+    // Citrus (45→81) straddles 45° border
+    { name:'Fruity',    angleStart: 45, angleEnd: 75, color:'#FFF9C4', description:'Found in: Kenyan, Ethiopian' },
+    // Tropical (81→117)
+    { name:'Citrus',  angleStart: 75, angleEnd:112.5, color:'#FFE0B2', description:'Found in: Kenyan' },
+    // Wine-like (117→153) straddles 135° border
+    { name:'Tropical', angleStart:112.5, angleEnd:157.5, color:'#D7CCC8', description:'Found in: Sumatran, Kenyan' },
+    // Earthy (153→189)
+    { name:'Wine-like', angleStart:157.5, angleEnd:201, color:'#E1BEE7', description:'Found in: Sumatran' },
+    // Herbal (189→225)
+    { name:'Earthy',    angleStart:201, angleEnd:234, color:'#C8E6C9', description:'Found in: Sumatran' },
+    // Nutty (225→261)
+    { name:'Herbal',     angleStart:234, angleEnd:270, color:'#81C784', description:'Found in: Colombian' },
+    // Cocoa (261→297)
+    { name:'Cocoa',     angleStart:270, angleEnd:306, color:'#BCAAA4', description:'Found in: Colombian' },
+  ];
+  
+  // 6) Draw segments + labels
+  flavors.forEach(f => {
+    // wrap‐around
+    let end = f.angleEnd;
+    if (end <= f.angleStart) end += 360;
+    const sa = (f.angleStart - 90) * Math.PI/180;
+    const ea = (end          - 90) * Math.PI/180;
+    
+    // Compute boundary points between inner and outer radius
+    const x1 = centerX + innerRadius * Math.cos(sa),
+          y1 = centerY + innerRadius * Math.sin(sa),
+          x2 = centerX + innerRadius * Math.cos(ea),
+          y2 = centerY + innerRadius * Math.sin(ea),
+          x3 = centerX + outerRadius  * Math.cos(ea),
+          y3 = centerY + outerRadius  * Math.sin(ea),
+          x4 = centerX + outerRadius  * Math.cos(sa),
+          y4 = centerY + outerRadius  * Math.sin(sa);
+    
+    // Build single‐ring path
+    const d = `
+      M ${x1},${y1}
+      A ${innerRadius},${innerRadius} 0 0,1 ${x2},${y2}
+      L ${x3},${y3}
+      A ${outerRadius},${outerRadius} 0 0,0 ${x4},${y4}
+      Z
+    `.replace(/\s+/g,' ');
+    
+    const seg = document.createElementNS(svg.namespaceURI,'path');
+    seg.setAttribute('d', d);
+    seg.setAttribute('fill',        f.color);
+    seg.setAttribute('stroke',      '#5D4037');
+    seg.setAttribute('stroke-width','1.5');
+    seg.classList.add('wheel-segment');
+    seg.dataset.name        = f.name;
+    seg.dataset.description = f.description;
+    svg.appendChild(seg);
+    
+    // Radial text
+    const midDeg = (f.angleStart + end)/2;
+    const LR     = outerRadius + 20;
+    const half   = (end - f.angleStart)/4;
+    const a1     = (midDeg - half - 90) * Math.PI/180;
+    const a2     = (midDeg + half - 90) * Math.PI/180;
+    const lx1    = centerX + LR * Math.cos(a1),
+          ly1    = centerY + LR * Math.sin(a1),
+          lx2    = centerX + LR * Math.cos(a2),
+          ly2    = centerY + LR * Math.sin(a2);
+    const flag   = (midDeg>90 && midDeg<270)?1:0;
+    const pid    = 'tp-' + f.name.toLowerCase().replace(/\s+/g,'-');
+    
+    const arc = document.createElementNS(svg.namespaceURI,'path');
+    arc.setAttribute('id', pid);
+    arc.setAttribute('d',  `M ${lx1},${ly1} A ${LR},${LR} 0 0,${flag} ${lx2},${ly2}`);
+    arc.setAttribute('fill','none');
+    arc.setAttribute('stroke','none');
+    svg.appendChild(arc);
+    
+    const txt = document.createElementNS(svg.namespaceURI,'text');
+    txt.classList.add('radial-text');
+    const tp = document.createElementNS(svg.namespaceURI,'textPath');
+    tp.setAttribute('href', `#${pid}`);
+    tp.setAttribute('startOffset','50%');
+    tp.setAttribute('text-anchor','middle');
+    tp.textContent = f.name;
+    txt.appendChild(tp);
+    svg.appendChild(txt);
+  });
+  
+  // 7) Modal interaction
+  // Create the modal element
+  const modal = document.createElement('div');
+  modal.id = 'flavorModal';
+  modal.className = 'flavor-modal';
+  document.body.appendChild(modal);
+  
+  // Define flavor notes data for the popup
+  const flavorData = {
+    'Fruity': {
+      origins: ['Ethiopian'],
+      notes: [
+        { type: 'Berry', color: 'berry-color', examples: 'Blueberry, Strawberry, Raspberry, Blackberry' },
+        { type: 'Stone Fruit', color: 'stone-color', examples: 'Peach, Apricot, Cherry' },
+        { type: 'Tropical', color: 'tropical-color', examples: 'Pineapple, Mango, Coconut' }
+      ]
+    },
+    'Floral': {
+      origins: ['Ethiopian'],
+      notes: [
+        { type: 'Floral', color: 'floral-color', examples: 'Jasmine, Rose, Lavender, Orange Blossom' }
+      ]
+    },
+    'Citrus': {
+      origins: ['Ethiopian','Kenyan'],
+      notes: [
+        { type: 'Citrus', color: 'citrus-color', examples: 'Lemon, Lime, Grapefruit, Orange' },
+        { type: 'Acidic', color: 'acid-color', examples: 'Bright, Tangy, Zesty' }
+      ]
+    },
+    'Sweet': {
+      origins: ['Colombian','Ethiopian'],
+      notes: [
+        { type: 'Sugars', color: 'sweet-color', examples: 'Honey, Caramel, Brown Sugar, Molasses' },
+        { type: 'Vanilla', color: 'vanilla-color', examples: 'Creamy, Sweet, Aromatic' }
+      ]
+    },
+    'Nutty': {
+      origins: ['Colombian'],
+      notes: [
+        { type: 'Tree Nuts', color: 'nut-color', examples: 'Almond, Hazelnut, Walnut' },
+        { type: 'Roasted Nuts', color: 'roasted-color', examples: 'Peanut, Toasted Almond' }
+      ]
+    },
+    'Cocoa': {
+      origins: ['Colombian'],
+      notes: [
+        { type: 'Chocolate', color: 'chocolate-color', examples: 'Milk Chocolate, Dark Chocolate, Cocoa Powder' },
+        { type: 'Roasted', color: 'roasted-color', examples: 'Toasted, Baked, Caramelized' }
+      ]
+    },
+    'Herbal': {
+      origins: ['Sumatran'],
+      notes: [
+        { type: 'Herbs', color: 'herb-color', examples: 'Sage, Mint, Thyme' },
+        { type: 'Tea', color: 'tea-color', examples: 'Black Tea, Green Tea' }
+      ]
+    },
+    'Earthy': {
+      origins: ['Sumatran'],
+      notes: [
+        { type: 'Earthy', color: 'earth-color', examples: 'Soil, Forest Floor, Mushroom' },
+        { type: 'Woody', color: 'wood-color', examples: 'Cedar, Oak, Pine' }
+      ]
+    },
+    'Wine-like': {
+      origins: ['Sumatran', 'Kenyan'],
+      notes: [
+        { type: 'Fermented', color: 'wine-color', examples: 'Red Wine, White Wine, Sherry' },
+        { type: 'Dried Fruit', color: 'dried-color', examples: 'Raisin, Prune, Dried Cherry' }
+      ]
+    },
+    'Tropical': {
+      origins: ['Kenyan'],
+      notes: [
+        { type: 'Tropical Fruit', color: 'tropical-color', examples: 'Mango, Pineapple, Papaya' },
+        { type: 'Coconut', color: 'coconut-color', examples: 'Fresh Coconut, Toasted Coconut' }
+      ]
+    }
+  };
+  
+  // Create modal content
+//   modal.innerHTML = `
+//     <div class="modal-content">
+//       <span class="close-modal">&times;</span>
+//       <h2 id="modalTitle" class="flavor-title"></h2>
+      
+//       <div class="origin-section">
+//         <h3 class="section-title">Most common in:</h3>
+//         <div id="originTags"></div>
+//       </div>
+      
+//       <div class="notes-section">
+//         <h3 class="section-title">Flavor notes:</h3>
+//         <div id="flavorNotes"></div>
+//       </div>
+//     </div>
+//   `;
+  
+  // Close modal when clicking the X
+  // Create a container for tooltips
+  const tooltipContainer = document.createElement('div');
+  tooltipContainer.id = 'tooltipContainer';
+  document.body.appendChild(tooltipContainer);
+
+  // Create a single tooltip element that will be repositioned
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  tooltipContainer.appendChild(tooltip);
+
+  svg.querySelectorAll('.inner-region').forEach(region => {
+    const name = region.dataset.name + " Coffee";
+    const description = region.dataset.description;
+    
+    region.addEventListener('mouseenter', e => {
+    //   tooltip.textContent = name;
+      tooltip.innerHTML = description;
+      positionTooltip(e);
+      tooltip.style.visibility = 'visible';
+      tooltip.style.opacity = '1';
+    });
+
+    region.addEventListener('mouseout', () => {
+      tooltip.style.visibility = 'hidden';
+      tooltip.style.opacity = '0';
+    });
+      
+    region.addEventListener('mousemove', positionTooltip);
+  });
+  
+  // Add mouseover/mouseout events to wheel segments
+  svg.querySelectorAll('.wheel-segment').forEach(segment => {
+    const flavorName = segment.dataset.name;
+    const data = flavorData[flavorName];
+    
+    if (data) {
+      // Event listeners for showing/hiding tooltip
+      segment.addEventListener('mouseover', (e) => {
+        // Populate tooltip content
+        /**
+         * tooltipContent: The content of the tooltip that will be displayed
+         * when a wheel segment is hovered over.
+         * 
+         * The content includes the flavor name, a list of the most common
+         * origins for that flavor, and a list of flavor notes.
+         * 
+         * The HTML structure is as follows:
+         * <h3 class="tooltip-header">Flavor Name</h3>
+         * <div class="origin-section">
+         *   <p class="section-title">Most common in:</p>
+         *   <div class="origin-tags">
+         *     <span class="origin-tag">Origin 1</span>
+         *     <span class="origin-tag">Origin 2</span>
+         *   </div>
+         * </div>
+         * <div class="notes-section">
+         *   <p class="section-title">Flavor notes:</p>
+         *   <div class="flavor-notes">
+         *     <!-- flavor notes content will go here -->
+         *   </div>
+         * </div>
+         */
+        let tooltipContent = `
+          <h3 class="tooltip-header">${flavorName}</h3>
+          <div class="origin-section">
+            <p class="section-title">Most common in:</p>
+            <div class="origin-tags">
+              ${data.origins.map(origin => `<span class="origin-tag">${origin}</span>`).join('')}
+            </div>
+          </div>
+          <div class="notes-section">
+            <p class="section-title">Flavor notes:</p>
+            <div class="flavor-notes">
+        `;
+        
+        // Add each note
+        data.notes.forEach(note => {
+          tooltipContent += `
+            <div class="note-item">
+              <div class="note-color ${note.color}"></div>
+              <div class="note-text"><strong>${note.type}:</strong> ${note.examples}</div>
+            </div>
+          `;
+        });
+        
+        tooltipContent += '</div></div>';
+        tooltip.innerHTML = tooltipContent;
+        
+        // Position and show the tooltip
+        positionTooltip(e);
+        tooltip.style.visibility = 'visible';
+        tooltip.style.opacity = '1';
+      });
+      
+      segment.addEventListener('mouseout', () => {
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+      });
+      
+      segment.addEventListener('mousemove', positionTooltip);
+    }
+  });
+  
+  // Function to position the tooltip
+  function positionTooltip(e) {
+    const tooltipWidth = tooltip.offsetWidth;
+    const tooltipHeight = tooltip.offsetHeight;
+    
+    // Get mouse position
+    let x = e.clientX;
+    let y = e.clientY;
+    
+    // Calculate position - try to keep tooltip within viewport
+    let left = x + 15;
+    let top = y + 15;
+    
+    // Check if tooltip would go off the right edge
+    if (x + tooltipWidth + 20 > window.innerWidth) {
+      left = x - tooltipWidth - 15;
+    }
+    
+    // Check if tooltip would go off the bottom edge
+    if (y + tooltipHeight + 20 > window.innerHeight) {
+      top = y - tooltipHeight - 15;
+    }
+    
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+  }
+});
+</script>
 {% endblock %}
