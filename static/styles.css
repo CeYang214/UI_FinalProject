@@ -1,5 +1,5 @@
-#wheel svg { cursor: pointer; }
-.wheel-segment:focus { outline: none; filter: brightness(0.9); }
+/* #wheel svg { cursor: pointer; }
+.wheel-segment:focus { outline: none; filter: brightness(0.9); } */
 
 /* Coffee Guide Styles */
 .coffee-guide {
