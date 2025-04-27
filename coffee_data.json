@@ -1,0 +1,86 @@
+{
+    "lessons": [
+      {
+        "id": 1,
+        "title": "Four Types of Coffee",
+        "description": "Coffee beans from different regions have unique flavors based on their growing conditions, altitude, and processing.",
+        "instruction": "Click to highlight any of the coffee cups below to start learning their flavor notes!"
+      },
+      {
+        "id": 2,
+        "title": "Ethiopian Coffee",
+        "origin": {
+          "regions": "Yirgacheffe, Sidamo regions",
+          "elevation": "1,700-2,200 metres",
+          "process": "Washed or Natural"
+        },
+        "flavor_profile": [
+          {"type": "Fruity", "notes": "Blueberry, Strawberry"},
+          {"type": "Floral", "notes": "Jasmine, Bergamot"},
+          {"type": "Sweet", "notes": "Honey, Citrus"},
+          {"type": "High Acidity", "notes": "Wine-like"}
+        ],
+        "intensity": {
+          "acidity": 90,
+          "body": 40
+        }
+      },
+      {
+        "id": 3,
+        "title": "Colombian Coffee",
+        "origin": {
+          "regions": "Huila, Antioquia regions",
+          "elevation": "1,200-2,000 metres",
+          "process": "Washed (traditional)"
+        },
+        "flavor_profile": [
+          {"type": "Sweet", "notes": "Caramel, Brown Sugar"},
+          {"type": "Nutty", "notes": "Almond, Walnut"},
+          {"type": "Chocolate", "notes": "Cocoa, Milk Chocolate"},
+          {"type": "Medium Acidity", "notes": "Balanced"}
+        ],
+        "intensity": {
+          "acidity": 60,
+          "body": 70
+        }
+      },
+      {
+        "id": 4,
+        "title": "Sumatran Coffee",
+        "origin": {
+          "regions": "Aceh, North Sumatra",
+          "elevation": "1,000-1,500 metres",
+          "process": "Wet-hulled (Giling Basah)"
+        },
+        "flavor_profile": [
+          {"type": "Earthy", "notes": "Forest Floor, Moss"},
+          {"type": "Herbal", "notes": "Cedar, Spice, Herbs"},
+          {"type": "Full-bodied", "notes": "Thick, Syrupy"},
+          {"type": "Low Acidity", "notes": "Smooth"}
+        ],
+        "intensity": {
+          "acidity": 30,
+          "body": 90
+        }
+      },
+      {
+        "id": 5,
+        "title": "Kenyan Coffee",
+        "origin": {
+          "regions": "Nyeri, Kirinyaga, Mt. Kenya",
+          "elevation": "1,700-2,100 metres",
+          "process": "Washed (double fermentation)"
+        },
+        "flavor_profile": [
+          {"type": "Citrus", "notes": "Grapefruit, Orange"},
+          {"type": "Wine-like", "notes": "Black Currant, Berries"},
+          {"type": "Tropical", "notes": "Pineapple, Coconut"},
+          {"type": "Bright Acidity", "notes": "Tangy, Sharp"}
+        ],
+        "intensity": {
+          "acidity": 95,
+          "body": 60
+        }
+      }
+    ]
+  }
