@@ -14,12 +14,16 @@ app.secret_key = 'random-key'
 with open('questions.json') as f:
     COFFEE_DATA = json.load(f)
 
+# load coffee learning data
+with open('coffee_data.json') as f:
+    LEARNING_DATA = json.load(f)
+
 
 @app.before_request
 def make_session_structures():
     session.setdefault('timestamps', {})
     session.setdefault('answers', {})
-
+    session.setdefault('coffee_selections', {})
 @app.route('/')
 def home():
     # Record time user entered home
@@ -31,7 +35,11 @@ def learn(lesson_id):
     # Record entry time for this lesson
     session['timestamps'][f'learn_{lesson_id}'] = datetime.utcnow().isoformat()
     # lesson_data = COFFEE_DATA['lessons'][lesson_id-1]
-    return render_template('learn.html', lesson_id=lesson_id)
+    # Get the appropriate lesson data from our JSON structure
+    lesson_data = LEARNING_DATA['lessons'][lesson_id-1]
+    #return render_template('learn.html', lesson_id=lesson_id)
+    return render_template('learn.html', lesson_id=lesson_id, lesson_data=lesson_data)
+
 
 @app.route('/wheel')
 def wheel():
@@ -121,6 +129,24 @@ def result():
     total = len(COFFEE_DATA['quiz'])
     return render_template('result.html', score=score, total=total)
 
+@app.route('/api/select-coffee', methods=['POST'])
+def select_coffee():
+    """API endpoint to record when a user selects a coffee type"""
+    if request.method == 'POST':
+        data = request.json
+        coffee_type = data.get('coffee')
+        timestamp = data.get('timestamp')
+        
+        # Store in session
+        if 'coffee_selections' not in session:
+            session['coffee_selections'] = {}
+        
+        session['coffee_selections'][coffee_type] = timestamp
+        
+        return {'status': 'success'}, 200
+    
+    return {'status': 'error'}, 400
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
-    
+
