@@ -3,8 +3,16 @@
 <div class="container">
   <h2 class="text-center mb-4">Coffee Flavor Wheel</h2>  
   <p class="inner-label text-center mb-4">Hover over any section to learn more about that flavor profile.</p>
-  <svg class="flavor-wheel" viewBox="0 0 1100 1100" preserveAspectRatio="xMidYMid meet"></svg>
+  <div style="height: 650px; max-width: 100%;">
+    <svg class="flavor-wheel" viewBox="0 0 1100 1100" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+  <a href="/quiz/1" class="quiz-button mt-3">
+    <span>Go to Quiz</span>
+</a>
 </div>
+<!-- <div class="text-right mt-4">
+  <a href="{{ url_for('quiz', question_id=1) }}" class="btn btn-primary">Go to Quiz</a>
+</div> -->
 
 <style>
   .flavor-wheel {
@@ -46,7 +54,24 @@
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-}
+  }
+  .quiz-button {
+    background: #5D4037;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .quiz-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+    color: white;
+  }
   /* .flavor-modal {
     display: none;
     position: fixed;
