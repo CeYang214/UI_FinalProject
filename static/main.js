@@ -1,3 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log(`Page loaded: ${location.pathname} at ${new Date().toISOString()}`);
-  });
+    const now = new Date();
+    const timeStr = now.toLocaleString(undefined, {hour12: false});
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    console.log(`Page loaded: ${location.pathname} at ${timeStr}`);
+});
