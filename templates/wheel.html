@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <p class="inner-label">Hover any section to learn more about that flavor profile.</p>
-    <svg class="flavor-wheel" viewBox="0 0 1100 1100" preserveAspectRatio="xMidYMid meet"></svg>
+  <h2 class="text-center mb-4">Coffee Flavor Wheel</h2>  
+  <p class="inner-label text-center mb-4">Hover over any section to learn more about that flavor profile.</p>
+  <svg class="flavor-wheel" viewBox="0 0 1100 1100" preserveAspectRatio="xMidYMid meet"></svg>
 </div>
 
 <style>
@@ -325,21 +326,21 @@ document.addEventListener('DOMContentLoaded', function() {
       ]
     },
     'Citrus': {
-      origins: ['Kenyan'],
+      origins: ['Ethiopian','Kenyan'],
       notes: [
         { type: 'Citrus', color: 'citrus-color', examples: 'Lemon, Lime, Grapefruit, Orange' },
         { type: 'Acidic', color: 'acid-color', examples: 'Bright, Tangy, Zesty' }
       ]
     },
     'Sweet': {
-      origins: ['Ethiopian'],
+      origins: ['Colombian','Ethiopian'],
       notes: [
         { type: 'Sugars', color: 'sweet-color', examples: 'Honey, Caramel, Brown Sugar, Molasses' },
         { type: 'Vanilla', color: 'vanilla-color', examples: 'Creamy, Sweet, Aromatic' }
       ]
     },
     'Nutty': {
-      origins: ['Colombian', 'Ethiopian'],
+      origins: ['Colombian'],
       notes: [
         { type: 'Tree Nuts', color: 'nut-color', examples: 'Almond, Hazelnut, Walnut' },
         { type: 'Roasted Nuts', color: 'roasted-color', examples: 'Peanut, Toasted Almond' }
@@ -353,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
       ]
     },
     'Herbal': {
-      origins: ['Colombian'],
+      origins: ['Sumatran'],
       notes: [
         { type: 'Herbs', color: 'herb-color', examples: 'Sage, Mint, Thyme' },
         { type: 'Tea', color: 'tea-color', examples: 'Black Tea, Green Tea' }
@@ -367,14 +368,14 @@ document.addEventListener('DOMContentLoaded', function() {
       ]
     },
     'Wine-like': {
-      origins: ['Sumatran'],
+      origins: ['Sumatran', 'Kenyan'],
       notes: [
         { type: 'Fermented', color: 'wine-color', examples: 'Red Wine, White Wine, Sherry' },
         { type: 'Dried Fruit', color: 'dried-color', examples: 'Raisin, Prune, Dried Cherry' }
       ]
     },
     'Tropical': {
-      origins: ['Sumatran', 'Kenyan'],
+      origins: ['Kenyan'],
       notes: [
         { type: 'Tropical Fruit', color: 'tropical-color', examples: 'Mango, Pineapple, Papaya' },
         { type: 'Coconut', color: 'coconut-color', examples: 'Fresh Coconut, Toasted Coconut' }
