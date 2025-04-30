@@ -1,7 +1,63 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Welcome to the World of Coffee!</h1>
-<p>Learn to identify coffee origins by flavor.</p>
-<a href="{{ url_for('learn', lesson_id=1) }}" class="btn btn-primary">Start Learning</a>
-<a href="{{ url_for('quiz', question_id=1) }}" class="btn btn-secondary">Test Yourself</a>
+<style>
+    .subtitle {
+        font-size: 18px;
+        color: grey;
+        margin: 30px 0;
+    }
+    .button {
+    background: #5D4037;
+    color: #ffffff;
+    padding: 12px 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .button:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    /* background: #F8BBD0; */
+    transition: all 0.3s ease;
+  }
+  
+  .button:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    /* background: #FFECB3; */
+    transition: all 0.3s ease;
+  }
+  
+  .button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 14px rgba(0,0,0,0.15);
+    color: white;
+  }
+  
+  .button:hover:before,
+  .button:hover:after {
+    width: 10px;
+  }
+</style>
+<div class="text-center">
+    <h1>Welcome to the World of Coffee!</h1>
+    <p class="subtitle">Learn to identify coffee from Ethiopia, Colombia, Sumatra, Kenya based on their flavor profile!</p>
+    <a href="{{ url_for('learn', lesson_id=1) }}" class="button">Start Learning</a>
+    <a href="{{ url_for('quiz', question_id=1) }}" class="button">Test Yourself</a>
+</div>
 {% endblock %}
