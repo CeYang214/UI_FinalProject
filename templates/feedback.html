@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="feedback-container {% if is_correct %}correct{% else %}incorrect{% endif %}">
+<div class="feedback-container {% if is_correct %}correct{% else %}incorrect{% endif %}"
+     data-is-correct="{{ is_correct|lower }}" 
+     data-question-id="{{ question_id }}" 
+     data-question-text="{{ question_data.question|e }}" 
+     data-selected-answer="{{ selected }}" 
+     data-correct-answer="{{ correct_answer }}">
     <div class="feedback-header text-center">
         {% if is_correct %}
             <div class="result-icon">✓</div>
@@ -53,29 +58,5 @@
     </div>
 </div>
 
-<!--add script to handle coffee icons -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const coffeeIcons = {
-            'Ethiopian': '/static/images/coffe_cup_black.png',
-            'Colombian': '/static/images/coffe_cup_blue.png',
-            'Sumatran': '/static/images/coffe_cup_brown.png',
-            'Kenyan': '/static/images/coffe_cup_yellow.png'
-        };
-        
-        //set correct coffee icon
-        const correctIconImg = document.getElementById('correct-coffee-icon');
-        if (correctIconImg) {
-            const correctType = '{{ correct_answer }}';
-            correctIconImg.src = coffeeIcons[correctType];
-        }
-        
-        //set selected coffee icon if present
-        const selectedIconImg = document.getElementById('selected-coffee-icon');
-        if (selectedIconImg) {
-            const selectedType = '{{ selected }}';
-            selectedIconImg.src = coffeeIcons[selectedType];
-        }
-    });
-</script>
+<script src="{{ url_for('static', filename='quiz.js') }}"></script>
 {% endblock %}
