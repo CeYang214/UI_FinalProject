@@ -82,7 +82,7 @@ def quiz(question_id):
         image_url=q.get('image_url')   # ← this makes {{ image_url }} available
     )
 
-    
+
 @app.route('/feedback')
 def feedback():
     """Show feedback for an answer"""
@@ -117,6 +117,59 @@ def feedback():
         next_url=next_url,
         question_data=q
     )
+
+@app.route('/debug/timestamps')
+def debug_timestamps():
+    """Display all timestamps recorded in the session for debugging purposes"""
+    # Format the timestamps for better readability
+    formatted_timestamps = {}
+    
+    for page, timestamp in session.get('timestamps', {}).items():
+        # Convert ISO string to datetime for formatting
+        try:
+            dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
+            formatted_time = dt.strftime('%Y-%m-%d %H:%M:%S')
+            formatted_timestamps[page] = {
+                'raw': timestamp,
+                'formatted': formatted_time,
+                'time_ago': get_time_ago(dt)
+            }
+        except (ValueError, AttributeError):
+            # In case the timestamp is not in the expected format
+            formatted_timestamps[page] = {
+                'raw': timestamp,
+                'formatted': 'Invalid timestamp format',
+                'time_ago': 'Unknown'
+            }
+    
+    # Pass the data to an HTML template
+    return render_template(
+        'timestamp.html', 
+        timestamps=formatted_timestamps,
+        current_time=datetime.now(timezone.utc).isoformat()
+    )
+
+def get_time_ago(timestamp):
+    """Format timestamp as a human-readable time ago string"""
+    now = datetime.now(timezone.utc)
+    
+    if not timestamp.tzinfo:
+        # If timestamp has no timezone, assume UTC
+        timestamp = timestamp.replace(tzinfo=timezone.utc)
+    
+    delta = now - timestamp
+    
+    # Convert to a human-readable format
+    seconds = delta.total_seconds()
+    
+    if seconds < 60:
+        return f"{int(seconds)} seconds ago"
+    elif seconds < 3600:
+        return f"{int(seconds // 60)} minutes ago"
+    elif seconds < 86400:
+        return f"{int(seconds // 3600)} hours ago"
+    else:
+        return f"{int(seconds // 86400)} days ago"
 
 @app.route('/result')
 def result():
