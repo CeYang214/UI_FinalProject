@@ -8,18 +8,12 @@
         Question {{ question_id }} of {{ total_questions }}
     </div>
     
-    <!-- Fixed-height container for question text -->
+    <!--dd hidden question-id element for JS -->
+    <div class="question-id" style="display: none;">{{ question_id }}</div>
+    
+    <!--fixed-height container for question text -->
     <div class="question-container text-center mb-4 d-flex align-items-center justify-content-center" style="min-height:120px;">
         <h2 class="mb-0">{{ question_text }}</h2>
-    </div>
-    
-    <!-- Fixed-size image box to preserve layout consistency -->
-    <div class="image-wrapper text-center mb-4" style="height:200px; overflow:hidden;">
-        {% if image_url %}
-        <img src="{{ image_url }}" alt="Image for question {{ question_id }}" class="img-fluid h-100">
-        {% else %}
-        <!-- placeholder to maintain space -->
-        {% endif %}
     </div>
     
     <form method="POST">
@@ -30,7 +24,8 @@
                     type="submit" 
                     name="choice" 
                     value="{{ choice }}" 
-                    class="btn btn-outline-primary btn-block py-3 text-truncate">
+                    class="choice-button btn btn-outline-primary btn-block py-3 text-truncate"
+                    data-answer="{{ choice }}">
                     {{ choice }}
                 </button>
             </div>
@@ -38,5 +33,18 @@
         </div>
     </form>
     
+    <!--add hidden next button for JS -->
+    <div class="text-center mt-4">
+        <a href="{{ url_for('quiz', question_id=question_id+1) }}" class="btn btn-primary next-button" style="display: none;">
+            {% if question_id < total_questions %}
+                Next Question
+            {% else %}
+                See Results
+            {% endif %}
+        </a>
+    </div>
 </div>
+
+<!--include the quiz.js script -->
+<script src="{{ url_for('static', filename='quiz.js') }}"></script>
 {% endblock %}

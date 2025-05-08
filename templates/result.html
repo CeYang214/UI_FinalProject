@@ -12,22 +12,63 @@
     </div>
     
     <div class="results-message text-center mb-4">
+        <h2 class="results-header">
         {% if score == total %}
-            <h2>Perfect Score!</h2>
-            <p>You're a coffee origin expert! Your knowledge of coffee flavors is exceptional.</p>
+            Perfect Score!
         {% elif score >= total * 0.8 %}
-            <h2>Great Job!</h2>
-            <p>You have an excellent understanding of coffee origins and their flavor profiles.</p>
+            Great Job!
         {% elif score >= total * 0.6 %}
-            <h2>Well Done!</h2>
-            <p>You have a good grasp of coffee origins. A little more practice and you'll be an expert!</p>
+            Well Done!
         {% elif score >= total * 0.4 %}
-            <h2>Not Bad!</h2>
-            <p>You're on your way to understanding coffee origins. Keep learning!</p>
+            Not Bad!
         {% else %}
-            <h2>Keep Learning!</h2>
-            <p>Coffee origins can be complex. Review the information and try again!</p>
+            Keep Learning!
         {% endif %}
+        </h2>
+        
+        <p class="results-message">
+        {% if score == total %}
+            You're a coffee origin expert! Your knowledge of coffee flavors is exceptional.
+        {% elif score >= total * 0.8 %}
+            You have an excellent understanding of coffee origins and their flavor profiles.
+        {% elif score >= total * 0.6 %}
+            You have a good grasp of coffee origins. A little more practice and you'll be an expert!
+        {% elif score >= total * 0.4 %}
+            You're on your way to understanding coffee origins. Keep learning!
+        {% else %}
+            Coffee origins can be complex. Review the information and try again!
+        {% endif %}
+        </p>
+    </div>
+    
+    <!-- Display coffee icons for all types -->
+    <div class="coffee-icons-collection text-center mb-4">
+        <div class="row justify-content-center">
+            <div class="col-3 col-md-2">
+                <div class="coffee-type-box">
+                    <img src="/static/images/coffe_cup_black.png" alt="Ethiopian Coffee" style="width: 80px; height: auto;">
+                    <p>Ethiopian</p>
+                </div>
+            </div>
+            <div class="col-3 col-md-2">
+                <div class="coffee-type-box">
+                    <img src="/static/images/coffe_cup_blue.png" alt="Colombian Coffee" style="width: 80px; height: auto;">
+                    <p>Colombian</p>
+                </div>
+            </div>
+            <div class="col-3 col-md-2">
+                <div class="coffee-type-box">
+                    <img src="/static/images/coffe_cup_brown.png" alt="Sumatran Coffee" style="width: 80px; height: auto;">
+                    <p>Sumatran</p>
+                </div>
+            </div>
+            <div class="col-3 col-md-2">
+                <div class="coffee-type-box">
+                    <img src="/static/images/coffe_cup_yellow.png" alt="Kenyan Coffee" style="width: 80px; height: auto;">
+                    <p>Kenyan</p>
+                </div>
+            </div>
+        </div>
     </div>
     
     <div class="action-buttons text-center">
@@ -35,4 +76,7 @@
         <a href="{{ url_for('quiz', question_id=1) }}" class="btn btn-primary">Try Again</a>
     </div>
 </div>
+
+<!--include the quiz.js script for score display -->
+<script src="{{ url_for('static', filename='quiz.js') }}"></script>
 {% endblock %}
