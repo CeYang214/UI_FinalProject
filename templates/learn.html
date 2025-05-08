@@ -1,68 +1,70 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Lesson {{ lesson_id }}</h2>
+<h2>{% if lesson_data %}{{ lesson_data.title }}{% else %}Lesson {{ lesson_id }}{% endif %}</h2>
 
 {% if lesson_id == 1 %}
-    <!-- Content for Lesson 1 -->
-    <h3> Four Types of Coffee</h3>
-    <p>Coffee beans from different regions have unique flavors based on their growing conditions, altitude, and processing</p>
-    <p>Click to highlight any of the coffee cups below to start learning their flavor notes!</p>
+    <!-- Content for Lesson 1 (Introduction) -->
+    <p>{{ lesson_data.description }}</p>
+    <p>{{ lesson_data.instruction }}</p>
 
-<div class="container mt-4">
-    <!-- Row with coffee names -->
-    <div class="row mb-3">
-        <div class="col-md-3 text-center">
-            <h4>Ethiopian</h4>
+    <div class="container mt-4">
+        <!-- Row with coffee names -->
+        <div class="row mb-3">
+            <div class="col-md-3 text-center">
+                <h4>Ethiopian</h4>
+            </div>
+            <div class="col-md-3 text-center">
+                <h4>Colombian</h4>
+            </div>
+            <div class="col-md-3 text-center">
+                <h4>Sumatran</h4>
+            </div>
+            <div class="col-md-3 text-center">
+                <h4>Kenyan</h4>
+            </div>
         </div>
-        <div class="col-md-3 text-center">
-            <h4>Colombian</h4>
-        </div>
-        <div class="col-md-3 text-center">
-            <h4>Sumatran</h4>
-        </div>
-        <div class="col-md-3 text-center">
-            <h4>Kenyan</h4>
+        
+        <!-- Row with coffee images -->
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <img src="{{ url_for('static', filename='images/coffe_cup_black.png') }}" alt="Ethiopian Coffee" 
+                     class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
+            </div>
+            <div class="col-md-3 text-center">
+                <img src="{{ url_for('static', filename='images/coffe_cup_blue.png') }}" alt="Colombian Coffee" 
+                     class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
+            </div>
+            <div class="col-md-3 text-center">
+                <img src="{{ url_for('static', filename='images/coffe_cup_yellow.png') }}" alt="Sumatran Coffee" 
+                     class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
+            </div>
+            <div class="col-md-3 text-center">
+                <img src="{{ url_for('static', filename='images/coffe_cup_brown.png') }}" alt="Kenyan Coffee" 
+                     class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
+            </div>
         </div>
     </div>
-    
-    <!-- Row with coffee images -->
-    <div class="row">
-        <div class="col-md-3 text-center">
-            <img src="{{ url_for('static', filename='images/coffe_cup_black.png') }}" alt="Ethiopian Coffee" class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
-        </div>
-        <div class="col-md-3 text-center">
-            <img src="{{ url_for('static', filename='images/coffe_cup_blue.png') }}" alt="Colombian Coffee" class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
-        </div>
-        <div class="col-md-3 text-center">
-            <img src="{{ url_for('static', filename='images/coffe_cup_yellow.png') }}" alt="Sumatran Coffee" class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
-        </div>
-        <div class="col-md-3 text-center">
-            <img src="{{ url_for('static', filename='images/coffe_cup_brown.png') }}" alt="Kenyan Coffee" class="img-fluid coffee-image" style="width: 150px; height: 150px; cursor: pointer;">
-        </div>
-    </div>
-</div>
-{% elif lesson_id == 2 %}
-    <!-- Ethiopian Coffee Guide -->
+{% else %}
+    <!-- Coffee Origin Guide (for lessons 2-5) -->
     <div class="coffee-guide container">
-        <!-- Title -->
-        <div class="coffee-title text-center mb-4">
-            <h2>Lesson 2</h2>
-            <h2>Ethiopian Coffee</h2>
-        </div> 
-
         <div class="row">
             <!-- Left Column -->
             <div class="col-md-6">
                 <!-- Coffee Icon Placeholder -->
                 <div class="coffee-icon text-center mb-3">
-                    <img src="{{ url_for('static', filename='images/coffe_cup_black.png') }}" alt="Ethiopian Coffee" class="coffee-image">
+                    {% set cup_colors = ['black', 'blue', 'yellow', 'brown'] %}
+                    {% set cup_index = lesson_id - 2 %}
+                    {% if cup_index < 4 %}
+                        <img src="{{ url_for('static', filename='images/coffe_cup_' ~ cup_colors[cup_index] ~ '.png') }}" 
+                             alt="{{ lesson_data.title }}" class="coffee-image">
+                    {% endif %}
                 </div>
                 
                 <!-- Information Box -->
                 <div class="coffee-info p-4 bg-light rounded">
-                    <p><strong>Origin:</strong> Yirgacheffe, Sidamo regions</p>
-                    <p><strong>Elevation:</strong> 1,700-2,200 metres</p>
-                    <p><strong>Process:</strong> Washed or Natural</p>
+                    <p><strong>Origin:</strong> {{ lesson_data.origin.regions }}</p>
+                    <p><strong>Elevation:</strong> {{ lesson_data.origin.elevation }}</p>
+                    <p><strong>Process:</strong> {{ lesson_data.origin.process }}</p>
                 </div>
             </div>
 
@@ -71,22 +73,29 @@
                 <!-- Flavor Profile -->
                 <div class="flavor-profile mb-4">
                     <h3>Flavor Profile</h3>
+                    {% for flavor in lesson_data.flavor_profile %}
                     <div class="flavor-item d-flex align-items-center my-2">
-                        <span class="flavor-dot fruity"></span>
-                        <span class="flavor-text">Fruity: Blueberry, Strawberry</span>
+                        <span class="flavor-dot {{ flavor.type.lower().replace(' ', '-').replace(',', '') }}"
+                              style="width: 20px; height: 20px; border-radius: 50%; margin-right: 15px;
+                                    {% if flavor.type.lower().startswith('fruity') %}background-color: #E5A193;
+                                    {% elif flavor.type.lower().startswith('floral') %}background-color: #E8A5C6;
+                                    {% elif flavor.type.lower().startswith('sweet') %}background-color: #FFF4B8;
+                                    {% elif flavor.type.lower().startswith('high') or flavor.type.lower().startswith('bright') %}background-color: #F2D4A7;
+                                    {% elif flavor.type.lower().startswith('medium') %}background-color: #D7CCC8;
+                                    {% elif flavor.type.lower().startswith('low') %}background-color: #A1887F;
+                                    {% elif flavor.type.lower().startswith('nutty') %}background-color: #BCAAA4;
+                                    {% elif flavor.type.lower().startswith('chocolate') %}background-color: #8D6E63;
+                                    {% elif flavor.type.lower().startswith('earthy') %}background-color: #795548;
+                                    {% elif flavor.type.lower().startswith('herbal') %}background-color: #81C784;
+                                    {% elif flavor.type.lower().startswith('full') %}background-color: #5D4037;
+                                    {% elif flavor.type.lower().startswith('citrus') %}background-color: #FFE0B2;
+                                    {% elif flavor.type.lower().startswith('wine') %}background-color: #E1BEE7;
+                                    {% elif flavor.type.lower().startswith('tropical') %}background-color: #FFCC80;
+                                    {% else %}background-color: #BDBDBD;{% endif %}">
+                        </span>
+                        <span class="flavor-text">{{ flavor.type }}: {{ flavor.notes }}</span>
                     </div>
-                    <div class="flavor-item d-flex align-items-center my-2">
-                        <span class="flavor-dot floral"></span>
-                        <span class="flavor-text">Floral: Jasmine, Bergamot</span>
-                    </div>
-                    <div class="flavor-item d-flex align-items-center my-2">
-                        <span class="flavor-dot sweet"></span>
-                        <span class="flavor-text">Sweet: Honey, Citrus</span>
-                    </div>
-                    <div class="flavor-item d-flex align-items-center my-2">
-                        <span class="flavor-dot acidic"></span>
-                        <span class="flavor-text">High Acidity: Wine-like</span>
-                    </div>
+                    {% endfor %}
                 </div>
 
                 <!-- Profile Intensity -->
@@ -94,23 +103,70 @@
                     <h3>Profile Intensity:</h3>
                     <div class="intensity-item my-3">
                         <span class="intensity-label">Acidity:</span>
-                        <div class="intensity-bar">
-                            <div class="intensity-fill" style="width: 90%"></div>
+                        <div class="intensity-bar" style="display: inline-block; width: 200px; height: 20px; 
+                                                         background-color: #eee; border-radius: 10px; 
+                                                         overflow: hidden; margin-left: 10px;">
+                            <div class="intensity-fill" style="height: 100%; background-color: #e53935; 
+                                                              border-radius: 10px; width: {{ lesson_data.intensity.acidity }}%;">
+                            </div>
                         </div>
                     </div>
                     <div class="intensity-item my-3">
                         <span class="intensity-label">Body:</span>
-                        <div class="intensity-bar">
-                            <div class="intensity-fill" style="width: 40%"></div>
+                        <div class="intensity-bar" style="display: inline-block; width: 200px; height: 20px; 
+                                                         background-color: #eee; border-radius: 10px; 
+                                                         overflow: hidden; margin-left: 10px;">
+                            <div class="intensity-fill" style="height: 100%; background-color: #2196F3; 
+                                                              border-radius: 10px; width: {{ lesson_data.intensity.body }}%;">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-{% elif lesson_id == 3 %}
-    <!-- Content for Lesson 3 -->
 {% endif %}
 
-<a href="{% if lesson_id < 4 %}{{ url_for('learn', lesson_id=lesson_id+1) }}{% else %}{{ url_for('quiz', question_id=1) }}{% endif %}" class="btn btn-primary">Next</a>
+<div class="mt-4">
+    {% if lesson_id > 1 %}
+    <a href="{{ url_for('learn', lesson_id=lesson_id-1) }}" class="btn btn-secondary">Back</a>
+    {% endif %}
+    <a href="{% if lesson_id < 5 %}{{ url_for('learn', lesson_id=lesson_id+1) }}{% else %}{{ url_for('wheel') }}{% endif %}" class="btn btn-primary">Next</a>
+</div>
+
+<script>
+    // Function to record coffee selection
+    function selectCoffee(coffeeType) {
+        // Record the selection with a timestamp
+        fetch('/api/select-coffee', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                coffee: coffeeType,
+                timestamp: new Date().toISOString()
+            })
+        })
+        .then(response => {
+            // Provide visual feedback
+            console.log('Coffee selection recorded:', coffeeType);
+            
+            // Highlight the selected coffee
+            const images = document.querySelectorAll('.coffee-image');
+            images.forEach(img => {
+                if (img.alt.includes(coffeeType)) {
+                    img.style.border = '3px solid #388e3c';
+                    img.style.boxShadow = '0 0 10px rgba(56, 142, 60, 0.5)';
+                } else {
+                    img.style.border = 'none';
+                    img.style.boxShadow = 'none';
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error recording selection:', error);
+        });
+    }
+</script>
 {% endblock %}
