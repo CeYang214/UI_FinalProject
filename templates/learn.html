@@ -137,9 +137,9 @@
 
 <div class="mt-4">
     {% if lesson_id > 1 %}
-    <a href="{{ url_for('learn', lesson_id=lesson_id-1) }}" class="btn btn-secondary">Back</a>
+    <a href="{{ url_for('learn', lesson_id=lesson_id-1) }}" class="button">Back</a>
     {% endif %}
-    <a href="{% if lesson_id < 5 %}{{ url_for('learn', lesson_id=lesson_id+1) }}{% else %}{{ url_for('wheel') }}{% endif %}" class="btn btn-primary">Next</a>
+    <a href="{% if lesson_id < 5 %}{{ url_for('learn', lesson_id=lesson_id+1) }}{% else %}{{ url_for('wheel') }}{% endif %}" class="button">Next</a>
 </div>
 
 <script>

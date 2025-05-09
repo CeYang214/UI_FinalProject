@@ -89,6 +89,77 @@
 
 /* End Coffee Guide Styles */
 
+/* Global Button Styles */
+.button, .btn-primary, .btn-secondary, .btn-outline-primary, .feedback-actions .btn, .action-buttons .btn {
+  background: #5D4037;
+  color: #ffffff;
+  padding: 12px 30px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: inline-block;
+  margin: 10px 5px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+  border: none;
+}
+
+.button:before, .btn-primary:before, .btn-secondary:before, .btn-outline-primary:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  transition: all 0.3s ease;
+}
+
+.button:after, .btn-primary:after, .btn-secondary:after, .btn-outline-primary:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  transition: all 0.3s ease;
+}
+
+.button:hover, .btn-primary:hover, .btn-secondary:hover, .btn-outline-primary:hover, .feedback-actions .btn:hover, .action-buttons .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 14px rgba(0,0,0,0.15);
+  color: white;
+  background: #5D4037;
+}
+
+.button:hover:before, .button:hover:after,
+.btn-primary:hover:before, .btn-primary:hover:after,
+.btn-secondary:hover:before, .btn-secondary:hover:after,
+.btn-outline-primary:hover:before, .btn-outline-primary:hover:after {
+  width: 10px;
+}
+
+.btn-outline-primary {
+  background: transparent;
+  color: #5D4037;
+  border: 2px solid #5D4037;
+}
+
+.btn-outline-primary:hover {
+  background: #5D4037;
+  color: white;
+}
+
+.choice-button {
+  margin: 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Feedback Page Styles */
 .feedback-container {
     max-width: 800px;

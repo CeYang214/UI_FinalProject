@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         
         // Find where to insert it (before the coffee icons collection)
-        const coffeeIcons = document.querySelector('.coffee-icons-collection');
+        const coffeeIcons = document.querySelector('.action-buttons');
         if (coffeeIcons) {
           const resultsContainer = document.querySelector('.results-container');
           resultsContainer.insertBefore(wrongAnswersSection, coffeeIcons);
