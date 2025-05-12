@@ -18,5 +18,9 @@ pip install flask
 To start the application, run:
 
 ```
+python app.py
+```
+or
+```
 python3 app.py
 ```
