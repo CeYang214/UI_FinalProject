@@ -2,13 +2,6 @@
 
 A website that helps users learn about different coffee types and test their knowledge through an interactive quiz.
 
-## Features
-
-- Educational content about different coffee types
-- Interactive coffee selection wheel
-- 10-question quiz with immediate feedback
-- Score tracking and results page
-
 ## Requirements
 
 - Python 3.x
